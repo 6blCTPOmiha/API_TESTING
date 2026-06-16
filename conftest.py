@@ -1,12 +1,13 @@
 import pytest
 
-from helpers.api_helper import get_wp_client, ApiHelper
 from helpers.db_helper import DbHelper
+from helpers.wordpress_api import WordPressApi
+
 
 
 @pytest.fixture(scope="session")
-def wp_client() -> ApiHelper:
-    client = get_wp_client()
+def wp_api() -> WordPressApi:
+    client = WordPressApi()
     yield client
     client.close()
 
@@ -16,4 +17,3 @@ def db() -> DbHelper:
     helper = DbHelper()
     yield helper
     helper.close_connection()
-
