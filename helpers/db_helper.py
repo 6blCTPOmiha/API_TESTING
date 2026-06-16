@@ -35,7 +35,13 @@ class DbHelper:
         row = self.get_post_by_id(post_id)
         return row["post_title"] if row else None
 
+    def delete_post_by_id(self, post_id: int) -> None:
+        self._cursor.execute(
+            "DELETE FROM wp_posts WHERE id = %s OR post_parent = %s",
+            (post_id, post_id),
+        )
+        self._connection.commit()
+
     def close_connection(self) -> None:
         self._cursor.close()
         self._connection.close()
-
