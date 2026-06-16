@@ -9,8 +9,7 @@ class ApiHelper:
         self._base_url = base_url.rstrip("/")
         self._session = requests.Session()
 
-        if auth:
-            self._session.auth = auth
+        self._session.auth = auth
 
         self._session.headers.update({"Content-Type": "application/json"})
 
