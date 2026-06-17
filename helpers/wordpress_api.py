@@ -13,6 +13,12 @@ class WordPressApi(ApiHelper):
             auth=(Config.WP_USER, Config.WP_PASSWORD),
         )
 
+    def get_post(self, post_id: int) -> requests.Response:
+        return self.get(f"{WP_POSTS_ENDPOINT}/{post_id}")
+
+    def get_posts(self) -> requests.Response:
+        return self.get(WP_POSTS_ENDPOINT)
+
     def create_post(self, payload: dict) -> requests.Response:
         return self.post(WP_POSTS_ENDPOINT, json=payload)
 
