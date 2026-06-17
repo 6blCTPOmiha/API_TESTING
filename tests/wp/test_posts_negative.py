@@ -33,3 +33,11 @@ class TestPostsNegative:
         response = wp_api.delete_post(99999)
         assert response.status_code == 404, "Ожидался статус 404 Not Found"
         assert response.json()["message"] == PostData.INVALID_ID_ERROR, "Сообщение об ошибке не корректное"
+
+
+    @allure.story("Получение поста")
+    @allure.title("TC-GET-03: GET /wp/v2/posts/{id} для несуществующего поста")
+    def test_get_post_not_existing(self, wp_api):
+        response = wp_api.get_post(99999)
+        assert response.status_code == 404, "Ожидался статус 404 Not Found"
+        assert response.json()["message"] == PostData.INVALID_ID_ERROR
