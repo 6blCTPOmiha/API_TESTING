@@ -27,3 +27,14 @@ def post_for_delete(wp_api, db):
     post_id = response.json()["id"]
     yield post_id
     db.delete_post_by_id(post_id)
+
+
+@pytest.fixture
+def inserted_post(db):
+    post_id = db.insert_post(
+        content=PostData.VALID_CONTENT,
+        title=PostData.VALID_TITLE,
+        status=PostData.VALID_STATUS,
+    )
+    yield post_id
+    db.delete_post_by_id(post_id)

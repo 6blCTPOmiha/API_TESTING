@@ -48,3 +48,27 @@ class TestPostsPositive:
         response = wp_api.delete_post(post_id)
         assert response.status_code == 200, "Ожидался статус 200 OK"
         assert db.get_post_status(post_id) == "trash", "Пост должен быть перемещён в корзину"
+
+
+    @allure.story("Получение поста")
+    @allure.title("TC-GET-01: GET /wp/v2/posts/{id} для существующего поста")
+    def test_get_post_by_id(self, wp_api, inserted_post):
+        post_id = inserted_post
+        response = wp_api.get_post(post_id)
+        assert response.status_code == 200, "Ожидался статус 200 OK"
+
+        body = response.json()
+        assert body["id"] == post_id
+        assert body["title"]["rendered"] == PostData.VALID_TITLE
+        assert body["status"] == PostData.VALID_STATUS
+
+
+    @allure.story("Получение списка постов")
+    @allure.title("TC-GET-02: GET /wp/v2/posts содержит созданный пост")
+    def test_get_posts_list_contains_inserted(self, wp_api, inserted_post):
+        post_id = inserted_post
+        response = wp_api.get_posts()
+        assert response.status_code == 200, "Ожидался статус 200 OK"
+
+        post_ids = [post["id"] for post in response.json()]
+        assert post_id in post_ids, f"Пост с id={post_id} не найден в списке постов"
