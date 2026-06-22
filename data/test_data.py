@@ -2,6 +2,8 @@ from config.base_config import Config
 
 WP_POSTS_ENDPOINT = f"{Config.WP_REST_PREFIX}/wp/v2/posts"
 
+YA_DISK_ENDPOINT = "/v1/disk"
+
 
 class PostData:
     VALID_TITLE = "Test Post"
