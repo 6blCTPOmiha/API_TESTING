@@ -5,11 +5,14 @@ from config.base_config import Config
 
 class ApiHelper:
 
-    def __init__(self, base_url: str, auth: tuple | None = None):
+    def __init__(self, base_url: str, auth: tuple | None = None, token: str | None = None):
         self._base_url = base_url.rstrip("/")
         self._session = requests.Session()
 
-        self._session.auth = auth
+        if auth:
+            self._session.auth = auth
+        if token:
+            self._session.headers.update({'Authorization': f'{token}'})
 
         self._session.headers.update({"Content-Type": "application/json"})
 

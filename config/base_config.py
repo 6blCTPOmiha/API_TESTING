@@ -16,3 +16,8 @@ class Config:
     DB_NAME: str = os.getenv("DB_NAME", "wordpress")
     DB_USER: str = os.getenv("DB_USER", "wordpress")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD", "wordpress")
+
+    YA_DISK_BASE_URL: str = "https://cloud-api.yandex.net"
+    YA_DISK_TOKEN: str = os.getenv("YA_DISK_TOKEN", "")
+    YA_DISK_LOGIN: str = os.getenv("YA_DISK_LOGIN", "")
+    YA_DISK_DISPLAY_NAME: str = os.getenv("YA_DISK_DISPLAY_NAME", "")
