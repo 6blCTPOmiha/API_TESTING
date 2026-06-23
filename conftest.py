@@ -1,10 +1,8 @@
 import pytest
 
-from helpers.api_helper import ApiHelper
 from helpers.db_helper import DbHelper
 from helpers.wordpress_api import WordPressApi
 from helpers.yandex_disk_api import YandexDiskApi
-from config.base_config import Config
 
 
 
@@ -30,7 +28,7 @@ def ya_api() -> YandexDiskApi:
 
 
 @pytest.fixture(scope="session")
-def ya_api_no_token() -> ApiHelper:
-    client = ApiHelper(base_url=Config.YA_DISK_BASE_URL)
+def ya_api_no_token() -> YandexDiskApi:
+    client = YandexDiskApi(token="")
     yield client
     client.close()
