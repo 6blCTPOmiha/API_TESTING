@@ -1,8 +1,13 @@
 import requests
+import re
 
 from config.base_config import Config
 from helpers.api_helper import ApiHelper
-from data.test_data import YA_DISK_ENDPOINT
+from data.test_data import (
+    YA_DISK_ENDPOINT,
+    YA_DISK_RESOURCES_ENDPOINT,
+    YA_DISK_TRASH_ENDPOINT,
+    YA_DISK_TRASH_RESTORE_ENDPOINT)
 
 
 class YandexDiskApi(ApiHelper):
@@ -16,6 +21,30 @@ class YandexDiskApi(ApiHelper):
     def get_disk_info(self) -> requests.Response:
         return self.get(YA_DISK_ENDPOINT)
 
+    def create_folder(self, path: str) -> requests.Response:
+        return self.put(YA_DISK_RESOURCES_ENDPOINT, params={"path": path})
+
+    def delete_resource(self, path: str, permanently: bool = False) -> requests.Response:
+        return self.delete(YA_DISK_RESOURCES_ENDPOINT, params={"path": path, "permanently": str(permanently).lower()})
+
+    def get_trash_resources(self) -> requests.Response:
+        return self.get(YA_DISK_TRASH_ENDPOINT, params={"path": "/"})
+
+    def find_in_trash(self, original_name: str) -> str | None:
+        response = self.get_trash_resources()
+        items = response.json().get("_embedded", {}).get("items", [])
+        pattern = re.compile(rf"^{re.escape(original_name)}(_[a-f0-9]+)?$")
+        for item in items:
+            if pattern.match(item["name"]):
+                return item["path"][7:]
+        return None
+
+    def restore_from_trash(self, path: str) -> requests.Response:
+        return self.put(YA_DISK_TRASH_RESTORE_ENDPOINT, params={"path": path})
+
+    def clear_trash(self) -> requests.Response:
+        return self.delete(YA_DISK_TRASH_ENDPOINT)
+
     @staticmethod
-    def parse_disk_info_response(response: requests.Response) -> tuple[int, dict]:
+    def parse_response(response: requests.Response) -> tuple[int, dict]:
         return response.status_code, response.json()
