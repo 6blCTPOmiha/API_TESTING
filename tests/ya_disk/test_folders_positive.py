@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from data.test_data import FolderData
+from utils.parsers import parse_response
 
 
 @allure.epic("Yandex Disk API")
@@ -12,7 +12,7 @@ class TestFoldersPositive:
     @allure.story("Создание папки")
     @allure.title("TC-FOL-01: PUT /v1/disk/resources — создание папки с валидным именем")
     def test_create_folder(self, ya_api, folder_for_create):
-        status_code, body = ya_api.parse_response(ya_api.create_folder(folder_for_create))
+        status_code, body = parse_response(ya_api.create_folder(folder_for_create))
         assert status_code == 201, "Ожидался статус 201 Created"
         assert "href" in body, "В ответе отсутствует поле href"
         assert "method" in body, "В ответе отсутствует поле method"
@@ -30,7 +30,7 @@ class TestFoldersPositive:
     @allure.story("Восстановление папки")
     @allure.title("TC-FOL-05: PUT /v1/disk/trash/resources/restore — восстановление папки из корзины")
     def test_restore_folder(self, ya_api, folder_for_restore):
-        status_code, body = ya_api.parse_response(ya_api.restore_from_trash(folder_for_restore))
+        status_code, body = parse_response(ya_api.restore_from_trash(folder_for_restore))
         assert status_code == 201, "Ожидался статус 201 Created"
         assert "href" in body, "В ответе отсутствует поле href"
         assert "method" in body, "В ответе отсутствует поле method"
