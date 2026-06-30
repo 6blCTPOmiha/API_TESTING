@@ -32,7 +32,7 @@ class PostData:
 
 
 class FolderData:
-    TEST_FOLDER_PATH = "test-autotest-folder"
+    TEST_FOLDER_PREFIX = "test-autotest-folder"
     ALREADY_EXISTS_ERROR = "DiskPathPointsToExistentDirectoryError"
     NONEXISTENT_PATH = "nonexistent-folder"
     NOT_FOUND_ERROR = "DiskNotFoundError"
