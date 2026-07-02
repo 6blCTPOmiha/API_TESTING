@@ -3,6 +3,9 @@ from config.base_config import Config
 WP_POSTS_ENDPOINT = f"{Config.WP_REST_PREFIX}/wp/v2/posts"
 
 YA_DISK_ENDPOINT = "/v1/disk"
+YA_DISK_RESOURCES_ENDPOINT = "/v1/disk/resources"
+YA_DISK_TRASH_ENDPOINT = "/v1/disk/trash/resources"
+YA_DISK_TRASH_RESTORE_ENDPOINT = "/v1/disk/trash/resources/restore"
 
 
 class PostData:
@@ -26,3 +29,10 @@ class PostData:
 
     EMPTY_CONTENT_ERROR = "Содержимое, заголовок и отрывок пусты."
     INVALID_ID_ERROR = "Неверный ID записи."
+
+
+class FolderData:
+    TEST_FOLDER_PREFIX = "test-autotest-folder"
+    ALREADY_EXISTS_ERROR = "DiskPathPointsToExistentDirectoryError"
+    NONEXISTENT_PATH = "nonexistent-folder"
+    NOT_FOUND_ERROR = "DiskNotFoundError"

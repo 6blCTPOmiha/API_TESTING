@@ -34,6 +34,7 @@ class ApiHelper:
     def delete(self, endpoint: str, **kwargs) -> requests.Response:
         return self._session.delete(self._build_url(endpoint), **kwargs)
 
+
     def close(self) -> None:
         self._session.close()
 

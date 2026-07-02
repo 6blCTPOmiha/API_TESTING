@@ -1,7 +1,7 @@
 import requests
 
 from config.base_config import Config
-from helpers.api_helper import ApiHelper
+from api_clients.api_helper import ApiHelper
 from data.test_data import WP_POSTS_ENDPOINT
 
 
